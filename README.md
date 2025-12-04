@@ -54,6 +54,14 @@ To facilitate reproducibility, the project is organized as follows:
     savepath;
     ```
 
+## Graphical User Interface
+
+FASC includes a user-friendly App Designer interface that allows researchers to visualize high-dimensional data clustering in real-time without writing code.
+
+![FASC GUI Screenshot](assets/FASC_GUI_screenshot.png)
+
+*Figure 1: The FASC GUI showing the main control panel (left) and the real-time visualization of clustering results (right) on the demo dataset.*
+
 ## Usage
 
 ### 1\. Graphical User Interface (Recommended)
