@@ -116,7 +116,7 @@ title('Cluster Distribution');
 ## Data Availability
 
   * **Demo Data:** A subset of particle data is provided in the `data/` folder of this repository to verify the algorithm's functionality.
-  * **Full Dataset:** The complete high-dimensional mass spectrometric dataset used in the manuscript is available at **[Zenodo/Figshare Repository Name]** under DOI: **[10.xxxx/xxxx]**.
+  * **Full Dataset:** The complete high-dimensional mass spectrometric dataset used in the manuscript is available at **[Zenodo]** under DOI: **10.5281/zenodo.17788367**.
 
 ## License & Patent Notice
 
