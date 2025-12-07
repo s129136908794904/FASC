@@ -1,6 +1,6 @@
 # FASC: Flexible Adaptive Stable Clustering Algorithm
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.placeholder.svg)](https://doi.org/10.5281/zenodo.17844844)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17844844.svg)](https://doi.org/10.5281/zenodo.17844844)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![MATLAB](https://img.shields.io/badge/Made%20with-MATLAB-orange.svg)](https://www.mathworks.com/products/matlab.html)
 [![Patent](https://img.shields.io/badge/Patent-Granted-brightgreen)](https://cpquery.cnipa.gov.cn/)
