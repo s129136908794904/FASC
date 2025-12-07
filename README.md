@@ -150,7 +150,7 @@ This software is provided under the **GNU General Public License v3.0 (GPLv3)**.
 
 If you use FASC or its GUI in your research, please cite our paper:
 
-> **FASC: A Flexible Adaptive Stable Clustering Algorithm for Mass Spectrometric Big Data**
+> **FASC: A Flexible Adaptive Stable Clustering Algorithm for Archive-Scale Mass Spectrometry**
 > Shao Shi, et al.
 > *Manuscript Submitted / Under Review*, 2025.
 > (The full citation and DOI will be updated upon publication.)
