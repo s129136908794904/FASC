@@ -44,8 +44,10 @@ To facilitate reproducibility, the project is organized as follows:
 
 ## Installation
 
-1.  **Clone the repository:**
+Assuming MATLAB is already installed.
 
+1.  **Clone the repository:**
+In terminal, Powershell or bash, run the following to get the codes:
     ```bash
     git clone https://github.com/s129136908794904/FASC.git
     cd FASC
@@ -59,7 +61,7 @@ To facilitate reproducibility, the project is organized as follows:
     savepath;
     ```
 
-Typical Install Time: < 2 minutes (assuming MATLAB is already installed).
+Typical Install Time: < 2 minutes.
 
 ## Data Availability
 
