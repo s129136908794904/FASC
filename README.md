@@ -32,7 +32,12 @@ To facilitate reproducibility, the project is organized as follows:
 
 ## System Requirements
 
-  * **MATLAB:** R2021b or later (Recommended for best App Designer compatibility).
+  * **Hardware:**
+      * **CPU:** Multi-core processor recommended (4+ cores) for parallel processing.
+      * **RAM:** Depending on the size of the dataset, e.g., we use ~200 GB RAM for the clustering of 25 million 600-D vectors (fp32) on Linux.
+      * **Non-standard Hardware:** None required.
+  * **Operating System:** Windows 10 or above, macOS (10.15+), or Linux (Ubuntu 20.04+, CentOS Linux release 7.5.1804 (Core)+).
+  * **MATLAB:** R2021b or later for windows, 2020bu5 or later for Linux.
   * **Required Toolboxes:**
       * *Statistics and Machine Learning Toolbox* (for `pdist2`, distance metrics).
       * *Parallel Computing Toolbox* (for parallel acceleration).
@@ -53,6 +58,17 @@ To facilitate reproducibility, the project is organized as follows:
     addpath(genpath(pwd));
     savepath;
     ```
+
+Typical Install Time: < 2 minutes (assuming MATLAB is already installed).
+
+## Data Availability
+
+  * **Demo Data:** A subset (100,000) of the high-dimensional mass spectrometric dataset in our paper is provided in the `data/` folder of this repository to verify the algorithm's functionality.
+  * **Full Dataset:** The complete high-dimensional mass spectrometric dataset used in the manuscript is available at **[Zenodo]** under DOI: **10.5281/zenodo.17788367**.
+
+## Algorithm Implementation
+  * For reviewers and researchers interested in the logic: The core clustering logic (pseudocode equivalent) is implemented in src/FASC.m.
+  * Detailed mathematical formulations are provided in the Methods section of the accompanying manuscript.
 
 ## Graphical User Interface
 
@@ -86,45 +102,100 @@ For batch processing or integration into existing pipelines, use the core functi
 #### Example Script
 
 ```matlab
-% 1. Load the demo dataset (included in the 'data' folder)
-% Ensure you have added the folders to your path as described in Installation
-load(fullfile('data', 'example_data.mat'), 'dataMatrix'); 
+% 1. Setup Environment
+addpath(genpath(pwd)); % Ensure src/ and utils/ are in path
+load(fullfile('data', 'dataMatrix.mat'), 'dataMatrix'); 
 
-% 2. Define Indices for Dual-Cosine only (if applicable)
-% Example: Features 1-300 are Positive spectrum, 301-600 are Negative
-idx_pos = 1:300; 
-idx_neg = 301:600;
+% 2. Define Parameters
+% Define Column Indices (Required for 'dual-cosine', ignored for others)
+idx_pos = 1:300;    % Positive spectrum features
+idx_neg = 301:600;  % Negative spectrum features
 
-% 3. Run FASC
+% Thresholds & Constraints
+sim_inter  = 0.70;      % Merge threshold (Inter-cluster)
+sim_intra  = 0.70;      % Vigilance threshold (Intra-cluster)
+seed_limit = 8;        % Max initial seeds
+max_clust  = 50;        % Max allowed clusters
+max_iter   = 200;       % Max iterations
+min_vol    = 2;         % Minimum particles to form a valid cluster
+
+% Strategy: 'DASS' (Density-Adaptive) or 'SF' (Similarity-First)
+strategy   = 'DASS';    
+
+% Metric: 'dual-cosine', 'cosine', 'euclidean', 'l1-norm', etc.
+algorithm  = 'dual-cosine'; 
+
+% 3. Run FASC Analysis
+fprintf('Starting FASC Analysis...\n');
+tic;
 [centers, counts, labels, info] = FASC(...
-    dataMatrix, ...       % Input data (Single or Double precision)
-    idx_pos, idx_neg, ... % Column indices for dual-ion mode
-    0.7, ...              % Inter-cluster similarity threshold (Merger)
-    0.7, ...              % Intra-cluster similarity threshold (Vigilance)
-    8, ...                % Initial cluster seed limit
-    50, ...               % Maximum cluster number
-    200, ...              % Maximum iterations
-    'DASS', ...           % Strategy: 'DASS' (Density-Adaptive) or 'SF' (Sim-First)
-    2, ...                % Minimum cluster volume to be valid
-    'dual-cosine');       % Similarity algorithm
+    dataMatrix, ...           % dataMatrix
+    idx_pos, idx_neg, ... % Ion mode indices
+    sim_inter, ...      % Similarity Threshold (Inter)
+    sim_intra, ...      % Similarity Threshold (Intra)
+    seed_limit, ...     % Initial Seed Limit
+    max_clust, ...      % Max Cluster Limit
+    max_iter, ...       % Max Iteration Limit
+    strategy, ...       % Optimization Strategy
+    min_vol, ...        % Min Cluster Volume
+    algorithm);         % Similarity Algorithm
+toc;
 
-% 4. Visualize Results (Optional)
-figure; 
-histogram(labels);
-title('Cluster Distribution');
+% 4. Generate Visualizations (Using built-in helper functions)
+% These functions generate the same plots as the GUI.
+
+% Define output directory for figures
+outDir = fullfile(pwd, 'results', filesep);
+if ~exist(outDir, 'dir'), mkdir(outDir); end
+
+% A. Plot Convergence & Outlier Stats
+% Usage: Clustering_iterInfoAnalyzer(infoStruct, ifPlot, ifSave, FileName, SaveDir)
+Clustering_iterInfoAnalyzer(info, true, true, 'Demo_Convergence', outDir);
+
+% B. Plot Similarity Heatmap & Distribution
+% Usage: Clustering_clusterListCountsHister(counts, centers, sim_threshold, algo, pos, neg, ifPlot, ifSave, FileName, SaveDir)
+Clustering_clusterListCountsHister(...
+    counts, centers, sim_inter, algorithm, idx_pos, idx_neg, ...
+    true, true, 'Demo_Heatmap', outDir);
+
+fprintf('Analysis complete. Results saved to %s\n', outDir);
 ```
 
-#### Output Arguments
+#### Expected Output
 
-  * `centers`: The resulting cluster centroid matrix.
-  * `counts`: The number of particles in each cluster.
-  * `labels`: Vector containing the cluster assignment ID for each particle (0 = outlier).
-  * `info`: Structure containing iteration history and convergence metrics.
+* **Console Output:**
+    The script provides real-time feedback on the algorithm's stability and convergence progress:
+    ```text
+    =========FASC Start
+    Iteration 1 start
+    ...
+    Iteration 22 start 
+      Current cluster count: 50 
+      No cluster merged 
+      Outlier count: 10143
+      Completed in 0.44s
+      Inter iteration similarity: 99.99991%
+    Converged!
 
-## Data Availability
+    Total clock time: 11.99s
+    CPU time: 38.62s
 
-  * **Demo Data:** A subset of particle data is provided in the `data/` folder of this repository to verify the algorithm's functionality.
-  * **Full Dataset:** The complete high-dimensional mass spectrometric dataset used in the manuscript is available at **[Zenodo]** under DOI: **10.5281/zenodo.17788367**.
+    Outliers count: 10143
+    FASC End=========
+    ```
+
+* **Workspace Variables:**
+    * `centers`: Matrix $(K \times D)$ containing the centroids of the $K$ identified clusters.
+    * `counts`: Vector $(K \times 1)$ containing the number of particles in each cluster.
+    * `labels`: Vector $(N \times 1)$ containing the cluster assignment ID for each particle ($0$ indicates an unassigned outlier).
+    * `info`: Structure containing iteration history, convergence metrics, and CPU timing data.
+
+* **Generated Figures (Saved in `results/`):**
+    1.  **Convergence Plot:** A dual-axis graph showing the stabilization of "Inter-Iteration Similarity" and "Cluster Count" over time.
+    2.  **Outlier Statistics:** A plot tracking the number of unassigned particles (outliers) per iteration.
+    3.  **Similarity Heatmap:** A visual matrix showing the Dual-Cosine similarity between the final cluster centers.
+    4.  **Cluster Distribution:** A bar chart displaying the fraction of total particles assigned to each cluster ID.
+    
 
 ## License & Patent Notice
 
