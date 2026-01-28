@@ -61,7 +61,7 @@ In terminal, Powershell or bash, run the following to get the codes:
     savepath;
     ```
 
-Typical Install Time: < 2 minutes.
+Typical Install Time: < 2 minutes, depending on your network.
 
 ## Data Availability
 
