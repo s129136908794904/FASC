@@ -104,6 +104,7 @@ For batch processing or integration into existing pipelines, use the core functi
 #### Example Script
 
 ```matlab
+% In MATLAB:
 % 1. Setup Environment
 addpath(genpath(pwd)); % Ensure src/ and utils/ are in path
 load(fullfile('data', 'dataMatrix.mat'), 'dataMatrix'); 
