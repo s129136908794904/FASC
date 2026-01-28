@@ -34,7 +34,7 @@ To facilitate reproducibility, the project is organized as follows:
 
   * **Hardware:**
       * **CPU:** Multi-core processor recommended (4+ cores) for parallel processing.
-      * **RAM:** Depending on the size of the dataset, e.g., we use ~200 GB RAM for the clustering of 25 million 600-D vectors (fp32) on Linux.
+      * **RAM:** Depending on the size of the dataset, e.g., we use ~200 GB RAM for the clustering of 25 million 300-D vectors (fp64) on CentOS Linux 7.
       * **Non-standard Hardware:** None required.
   * **Operating System:** Windows 10 or above, macOS (10.15+), or Linux (Ubuntu 20.04+, CentOS Linux release 7.5.1804 (Core)+).
   * **MATLAB:** R2021b or later for windows, 2020bu5 or later for Linux.
@@ -234,3 +234,9 @@ Southern University of Science and Technology (SUSTech)
 Shenzhen, China
 Email: [12231091@mail.sustech.edu.cn]
 GitHub: [https://github.com/s129136908794904](https://github.com/s129136908794904)
+
+***Prof. Xin Yang**
+School of Environmental Science and Engineering
+Southern University of Science and Technology (SUSTech)
+Shenzhen, China
+Email: [yangx@sustech.edu.cn]
