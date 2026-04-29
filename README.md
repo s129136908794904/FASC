@@ -208,7 +208,7 @@ Clustering_clusterListCountsHister(...
 fprintf('Analysis complete. Results saved to %s\n', outDir);
 ```
 
-#### Expected Output
+#### Example Output
 
 * **Console Output:**
     The script provides real-time feedback on the algorithm's stability and convergence progress:
@@ -227,7 +227,7 @@ fprintf('Analysis complete. Results saved to %s\n', outDir);
     Total clock time: 11.99s
     CPU time: 38.62s
 
-    Outliers count: 10143
+    Outliers count: 1043
     FASC End=========
     ```
 
