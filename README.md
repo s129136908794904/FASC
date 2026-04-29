@@ -56,7 +56,7 @@ To facilitate reproducibility, the project is organized as follows:
 FASC's architectural design strictly decouples the optimization logic from the similarity kernel. This mathematical flexibility means the algorithm natively supports a massive library of metrics, and can easily accommodate any user-defined scoring system.
 
 **Built-In Metrics in Python:**
-* **Domain-Specific:** `dual-cosine` (Optimized for dual-polarity single-particle mass spectrometry).
+* **Domain-Specific:** `dual-cosine` (Optimized for dual-polarity single-particle mass spectrometry, as an example of online mass spectrometry).
 * **Standard Distance-Based:** `cosine`, `euclidean`, `l1` (Manhattan), `minimum`, `maximum`.
 * **Information-Theoretic:** `entropy`, `weighted entropy`.
 * **Algebraic & Geometric:** `algebraic`, `geometric`, `harmonic`, `enhanced harmonic`, `logarithmic`, `best average`, `fitted core`.
