@@ -67,21 +67,26 @@ jupyter notebook tutorial.ipynb
 ### Python Scripting Example
 ```python
 import numpy as np
-import scipy.sparse as sp
 from fasc_core import run_fasc
 
-# 1. Load your data (Dense or Sparse)
-# data_matrix = sp.load_npz('../data/demo_sparse.npz') 
+# 1. Load the demo data
+data_path = './dataMatrix.csv'
+
+print(f"Loading dataset from {data_path}...")
+data_matrix = np.loadtxt(data_path, delimiter=',')
+print(f"Data loaded successfully! Shape: {data_matrix.shape} (Spectra x Features)")
+
 
 # 2. Define Parameters
-idx_pos = np.arange(0, 300)   # Positive spectrum features
-idx_neg = np.arange(300, 600) # Negative spectrum features
 
 sim_inter = 0.70      # Merge threshold (Inter-cluster)
 sim_intra = 0.70      # Assignment threshold (Intra-cluster)
 max_clust = 50        # Capacity budget
 strategy  = 'DASS'    # Density-Augmented Similarity Selection
+# Here we use dual-cosine metric as an example, for other similarity algorithms, idx_pos and idx_neg is not required.
 algo      = 'dual-cosine' 
+idx_pos = np.arange(0, 300)   # Positive spectrum features
+idx_neg = np.arange(300, 600) # Negative spectrum features
 
 # 3. Run FASC
 centers, counts, labels, iter_data, total_iters = run_fasc(
