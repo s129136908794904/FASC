@@ -224,8 +224,8 @@ fprintf('Analysis complete. Results saved to %s\n', outDir);
       Inter iteration similarity: 99.99991%
     Converged!
 
-    Total clock time: 11.99s
-    CPU time: 38.62s
+    Total clock time: 1.199s
+    CPU time: 3.862s
 
     Outliers count: 1043
     FASC End=========
