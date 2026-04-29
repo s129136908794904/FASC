@@ -51,6 +51,19 @@ To facilitate reproducibility, the project is organized as follows:
 * **Demo Data:** A subset of the high-dimensional mass spectrometric dataset (dataMatrix.csv) is provided in the `data/` folder to verify the algorithm's functionality.
 * **Full Dataset:** The complete 25-million spectra dataset used in the manuscript is available at **[Zenodo]** under DOI: **10.5281/zenodo.17788367**.
 
+## Supported Similarity Metrics
+
+FASC's architectural design strictly decouples the optimization logic from the similarity kernel. This mathematical flexibility means the algorithm natively supports a massive library of metrics, and can easily accommodate any user-defined scoring system.
+
+**Built-In Metrics in Python:**
+* **Domain-Specific:** `dual-cosine` (Optimized for dual-polarity single-particle mass spectrometry).
+* **Standard Distance-Based:** `cosine`, `euclidean`, `l1` (Manhattan), `minimum`, `maximum`.
+* **Information-Theoretic:** `entropy`, `weighted entropy`.
+* **Algebraic & Geometric:** `algebraic`, `geometric`, `harmonic`, `enhanced harmonic`, `logarithmic`, `best average`, `fitted core`.
+
+**Custom Metrics (Absolute Agnosticism):** 
+Unlike traditional clustering algorithms that are structurally bound to a specific geometry (e.g., K-Means strictly requires the $\ell_2$-norm), FASC requires only that the similarity metric be **bounded and symmetric**. You can easily implement and plug in any other custom similarity algorithm, deep-learning embedding, or domain-specific distance oracle without destabilizing the solver's deterministic convergence guarantees.
+
 ---
 
 ## Usage: Python (Recommended for Data Science Pipelines)
