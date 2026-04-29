@@ -48,7 +48,7 @@ To facilitate reproducibility, the project is organized as follows:
 
 ## Data Availability
 
-* **Demo Data:** A subset of the high-dimensional mass spectrometric dataset is provided in the `data/` folder to verify the algorithm's functionality.
+* **Demo Data:** A subset of the high-dimensional mass spectrometric dataset (dataMatrix.csv) is provided in the `data/` folder to verify the algorithm's functionality.
 * **Full Dataset:** The complete 25-million spectra dataset used in the manuscript is available at **[Zenodo]** under DOI: **10.5281/zenodo.17788367**.
 
 ---
