@@ -11,11 +11,10 @@ Developed at **Southern University of Science and Technology (SUSTech)**, FASC a
 
 ## Key Features
 
-* **Adaptive Clustering:** Automatically determines the number of clusters based on data density and similarity thresholds, eliminating the need for pre-defined cluster counts.
-* **Dual-Cosine Metric:** Incorporates a specialized "Dual-Cosine" similarity algorithm (Positive/Negative ion modes) optimized for chemical fingerprinting of atmospheric particles.
-* **High Performance:** Fully vectorized and parallelized implementation using MATLAB's `parfor` and `parfeval` to accelerate processing of large datasets.
-* **User-Friendly GUI:** Includes a complete App Designer interface for easy data loading, parameter tuning, and real-time monitoring.
-* **Advanced Visualization:** Built-in tools for generating publication-quality similarity heatmaps, cluster distribution histograms, and convergence plots.
+* **Dual-Language Support:** Fully implemented in both **Python** (for seamless open-science integration) and **MATLAB** (for HPC-optimized matrix streaming).
+* **Adaptive Clustering:** Automatically determines the number of clusters based on data density and similarity thresholds, acting as a high-pass density filter.
+* **Metric Flexibility:** Supports arbitrary bounded symmetric kernels, including a specialized "Dual-Cosine" similarity optimized for dual-polarity atmospheric MS.
+* **Deterministic Stability:** Guarantees mathematically reproducible convergence independent of data presentation order.
 
 ## Repository Structure
 
@@ -23,12 +22,12 @@ To facilitate reproducibility, the project is organized as follows:
 
 ```text
 .
-├── src/                # Core algorithm source code (FASC.m, FASC_GUI.m)
-├── utils/              # Helper functions for visualization and analysis
-├── data/               # Demo datasets (for reproducing examples)
+├── python/             # Python implementation (Core algorithm & Jupyter tutorials)
+├── matlab/             # MATLAB implementation (Core algorithm, Utils, & GUI)
+├── data/               # Demo datasets for reproducing examples
 ├── LICENSE             # GNU GPLv3 License text
 └── README.md           # Project documentation
-````
+```
 
 ## System Requirements
 
@@ -37,12 +36,68 @@ To facilitate reproducibility, the project is organized as follows:
       * **RAM:** Depending on the size of the dataset, e.g., we use ~200 GB RAM for the clustering of 25 million 300-D vectors (fp64) on CentOS Linux 7.
       * **Non-standard Hardware:** None required.
   * **Operating System:** Windows 10 or above, macOS (10.15+), or Linux (Ubuntu 20.04+, CentOS Linux release 7.5.1804 (Core)+).
-  * **MATLAB:** R2021b or later for windows, 2020bu5 or later for Linux.
-  * **Required Toolboxes:**
-      * *Statistics and Machine Learning Toolbox* (for `pdist2`, distance metrics).
-      * *Parallel Computing Toolbox* (for parallel acceleration).
 
-## Installation
+### Python Environment
+* **Python:** 3.8 or higher.
+* **Dependencies:** `numpy`, `scipy`, `matplotlib`, `jupyter`
+* Install dependencies via: `pip install -r python/requirements.txt`
+
+### MATLAB Environment
+* **MATLAB:** R2021b or later (Windows), 2020b or later (Linux).
+* **Toolboxes:** *Statistics and Machine Learning Toolbox*, *Parallel Computing Toolbox*.
+
+## Data Availability
+
+* **Demo Data:** A subset of the high-dimensional mass spectrometric dataset is provided in the `data/` folder to verify the algorithm's functionality.
+* **Full Dataset:** The complete 25-million spectra dataset used in the manuscript is available at **[Zenodo]** under DOI: **10.5281/zenodo.17788367**.
+
+---
+
+## Usage: Python (Recommended for Data Science Pipelines)
+
+The Python implementation is optimized for sparse matrix operations and integrates seamlessly into modern data science workflows.
+
+### Quick Start (Jupyter Notebook)
+The easiest way to get started is to run the interactive tutorial:
+```bash
+cd python
+jupyter notebook tutorial.ipynb
+```
+
+### Python Scripting Example
+```python
+import numpy as np
+import scipy.sparse as sp
+from fasc_core import run_fasc
+
+# 1. Load your data (Dense or Sparse)
+# data_matrix = sp.load_npz('../data/demo_sparse.npz') 
+
+# 2. Define Parameters
+idx_pos = np.arange(0, 300)   # Positive spectrum features
+idx_neg = np.arange(300, 600) # Negative spectrum features
+
+sim_inter = 0.70      # Merge threshold (Inter-cluster)
+sim_intra = 0.70      # Assignment threshold (Intra-cluster)
+max_clust = 50        # Capacity budget
+strategy  = 'DASS'    # Density-Augmented Similarity Selection
+algo      = 'dual-cosine' 
+
+# 3. Run FASC
+centers, counts, labels, iter_data, total_iters = run_fasc(
+    data_matrix=data_matrix, 
+    idx_pos=idx_pos, idx_neg=idx_neg, 
+    sim_inter=sim_inter, sim_inner=sim_intra, 
+    init_limit=10, max_clusters=max_clust, max_iter=200, 
+    strategy=strategy, min_vol=10, algo=algo
+)
+
+print(f"FASC identified {len(counts)} pure clusters.")
+```
+
+---
+
+## Usage: MATLAB (Recommended for HPC & GUI Users)
 
 Assuming MATLAB is already installed.
 
@@ -61,21 +116,6 @@ In terminal, Powershell or bash, run the following to get the codes:
     savepath;
     ```
 
-Typical Install Time: < 2 minutes, depending on your network.
-
-## Data Availability
-
-  * **Demo Data:** A subset (100,000) of the high-dimensional mass spectrometric dataset in our paper is provided in the `data/` folder of this repository to verify the algorithm's functionality.
-  * **Full Dataset:** The complete high-dimensional mass spectrometric dataset used in the manuscript is available at **[Zenodo]** under DOI: **10.5281/zenodo.17788367**.
-
-## Algorithm Implementation
-  * For reviewers and researchers interested in the logic: The core clustering logic (pseudocode equivalent) is implemented in src/FASC.m.
-  * Detailed mathematical formulations are provided in the Methods section of the accompanying manuscript.
-
-## Graphical User Interface
-
-FASC includes a user-friendly App Designer interface that allows researchers to visualize high-dimensional data clustering in real-time without writing code.
-
 ![FASC GUI Screenshot](assets/FASC_GUI_screenshot.png)
 
 *Figure 1: The FASC GUI showing the main control panel (left) and the real-time visualization of clustering results (right) on the demo dataset.*
@@ -84,7 +124,7 @@ FASC includes a user-friendly App Designer interface that allows researchers to 
 
 ### 1\. Graphical User Interface (Recommended)
 
-The GUI is the easiest way to explore your data and tune parameters.
+FASC includes a user-friendly App Designer interface that allows researchers to visualize high-dimensional data clustering in real-time without writing code.
 
 ```matlab
 % In MATLAB Command Window:
