@@ -122,8 +122,7 @@ In terminal, Powershell or bash, run the following to get the codes:
 
 ## Usage
 
-### 1\. Graphical User Interface (Recommended)
-
+### 1\. Graphical User Interface
 FASC includes a user-friendly App Designer interface that allows researchers to visualize high-dimensional data clustering in real-time without writing code.
 
 ```matlab
