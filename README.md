@@ -12,8 +12,8 @@ Developed at **Southern University of Science and Technology (SUSTech)**, FASC a
 ## Key Features
 
 * **Dual-Language Support:** Fully implemented in both **Python** (for seamless open-science integration) and **MATLAB** (for HPC-optimized matrix streaming).
-* **Adaptive Clustering:** Automatically determines the number of clusters based on data density and similarity thresholds, acting as a high-pass density filter.
 * **Metric Flexibility:** Supports arbitrary bounded symmetric kernels, including a specialized "Dual-Cosine" similarity optimized for dual-polarity atmospheric MS.
+* **Adaptive Clustering:** Automatically determines the number of clusters based on data density and similarity thresholds, acting as a high-pass density filter.
 * **Deterministic Stability:** Guarantees mathematically reproducible convergence independent of data presentation order.
 
 ## Repository Structure
