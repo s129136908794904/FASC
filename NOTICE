@@ -1,0 +1,30 @@
+FASC - Flexible Adaptive Stable Clustering
+
+Copyright (C) 2025 Shao Shi, Southern University of Science and Technology.
+
+Required Notice: Copyright (C) 2025 Shao Shi, Southern University of Science and Technology.
+
+Licensing
+---------
+
+This version is made source-available under the PolyForm Noncommercial
+License 1.0.0. See the LICENSE file for the complete terms. Commercial use
+is not licensed and requires a separate written commercial licence covering
+the applicable copyright and patent rights.
+
+This licence change does not revoke rights already granted for any version
+previously distributed under GPLv3. Those copies remain governed by the
+GPLv3 terms under which they were received.
+
+Patent notice
+-------------
+
+The authors identify the FASC algorithm as covered by the following granted
+Chinese invention patents:
+
+- ZL 2025 1 0839139.3
+- ZL 2026 1 0263575.5
+
+The PolyForm Noncommercial License includes a patent licence for claims the
+licensor can license in connection with uses permitted by its terms. No
+commercial copyright or patent licence is granted by this repository.
